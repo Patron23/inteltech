@@ -108,11 +108,8 @@ int main(int argc[], char* argv)
 	}
 	// close
 	closesocket(clientSocket);
-
-
 	// shutdown
 	WSACleanup();
-
-	std::cin >> buf;
+	
 	return NULL;
 }
