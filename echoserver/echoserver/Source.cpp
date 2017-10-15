@@ -85,7 +85,7 @@ int main(int argc[], char* argv)
 
 		ZeroMemory(buf, 4096);
 
-		// æäåì èíôû
+		
 		int bytesReceived = recv(clientSocket, buf, 4096, 0);
 
 		std::cout << "\n bytes recv = " << bytesReceived;
