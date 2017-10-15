@@ -10,7 +10,7 @@
 
 int main(int argc[], char* argv)
 {
-	// Инициализация winsock
+	// initialize winsock
 	WSADATA wsData;
 	WORD ver = MAKEWORD(2, 2);
 
@@ -25,7 +25,7 @@ int main(int argc[], char* argv)
 		std::cout << "\nInitialize winsock - ok!";
 	}
 
-	// Создаем сокет
+	// create socket
 	SOCKET servSock = socket(AF_INET, SOCK_STREAM, 0);
 	if (servSock == INVALID_SOCKET)
 	{
@@ -37,7 +37,7 @@ int main(int argc[], char* argv)
 		std::cout << "\nSocket is created!";
 	}
 
-	// Привязать сокет к IP адресу; порт.
+	// bind socket
 	sockaddr_in addr;
 	addr.sin_family	 = AF_INET;
 	addr.sin_port = htons(DEF_PORT);
@@ -45,10 +45,10 @@ int main(int argc[], char* argv)
 
 	bind(servSock, (sockaddr*)&addr, sizeof(addr));
 
-	// Прослушивание сокет
+	// listen
 	listen(servSock, SOMAXCONN);
 
-	// Ожидаем подключение
+	// wait for a connection
 	sockaddr_in client;
 	int clientSize = sizeof(client);
 
@@ -72,11 +72,11 @@ int main(int argc[], char* argv)
 	}
 
 
-	// Закрываем прослушивание
+	// close listening socket
 	closesocket(servSock);
 
 
-	// While loop: ок & Echo message 
+	// While loop Echo message 
 
 	char buf[4096];
 
@@ -85,14 +85,14 @@ int main(int argc[], char* argv)
 
 		ZeroMemory(buf, 4096);
 
-		// ждем инфы
+		// Г¦Г¤ГҐГ¬ ГЁГ­ГґГ»
 		int bytesReceived = recv(clientSocket, buf, 4096, 0);
 
 		std::cout << "\n bytes recv = " << bytesReceived;
 		if (bytesReceived == SOCKET_ERROR)
 		{
 			std::cerr << "\nError in recv(). Quitting" << std::endl;
-			break;															// ищем ошибку где-то тут. Тк вылезает эта ошибка.
+			break;															// ГЁГ№ГҐГ¬ Г®ГёГЁГЎГЄГі ГЈГ¤ГҐ-ГІГ® ГІГіГІ. Г’ГЄ ГўГ»Г«ГҐГ§Г ГҐГІ ГЅГІГ  Г®ГёГЁГЎГЄГ .
 		}
 		
 		if (bytesReceived == 0)
@@ -101,7 +101,7 @@ int main(int argc[], char* argv)
 			break;
 		}
 
-		// отправляет эхо
+		// send message
 		send(clientSocket, buf, bytesReceived + 1, 0);
 
 
@@ -113,6 +113,6 @@ int main(int argc[], char* argv)
 	// shutdown
 	WSACleanup();
 
-	std::cin >> buf;		//key
+	std::cin >> buf;
 	return NULL;
 }
